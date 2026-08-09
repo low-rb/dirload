@@ -33,7 +33,7 @@ module LowLoad
 
     def append(file_path:, adapter:, metadata:)
       @loaded_paths << file_path
-      @file_types[File.extname(file_path).delete_prefix('.')] = file_path
+      @file_types[File.extname(file_path).delete_prefix('.')] << file_path
       @url_paths[adapter.url_path(file_path:)] = file_path
 
       metadata[:tags]&.each do |tag|

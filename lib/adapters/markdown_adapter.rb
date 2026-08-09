@@ -9,18 +9,19 @@ module LowLoad
     EXTENSIONS = ['md', 'rd', 'markdown', 'raindown']
 
     def metadata(file_path:)
-      meta_lines = []
+      line_numbers = []
       yaml_lines = []
 
       File.foreach(file_path).with_index do |line, index|
         if line.strip == '---'
-          meta_lines << index + 1
-          break if meta_lines.count > 1
-        else
+          line_numbers << index + 1
+          break if line_numbers.count > 1
+        elsif line_numbers.count > 0
           yaml_lines << line
         end
       end
 
+      # TODO: Test that this returns an empty hash when no yaml lines found.
       YAML.safe_load(yaml_lines.join, symbolize_names: true)
     end
 
