@@ -26,7 +26,7 @@ PATH
 PATH
   remote: .
   specs:
-    lowload (0.6.0)
+    lowload (0.6.1)
       lowkey
 
 GEM
