@@ -10,7 +10,7 @@ end
 
 module LowLoad
   class RBXAdapter < Adapter
-    EXTENSIONS = ['rbx']
+    EXTENSIONS = ['rbx'].freeze
 
     # Map all definitions and dependencies.
     def mapload(file_path:)

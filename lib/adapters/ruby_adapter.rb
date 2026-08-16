@@ -6,7 +6,7 @@ require_relative '../loader'
 
 module LowLoad
   class RubyAdapter < Adapter
-    EXTENSIONS = ['rb']
+    EXTENSIONS = ['rb'].freeze
 
     # Map all definitions and dependencies.
     def mapload(file_path:)

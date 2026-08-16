@@ -11,9 +11,9 @@ module LowLoad
   class UnsupportedTemplate < StandardError; end
 
   class << self
-    ADAPTERS = [MarkdownAdapter.new, RBXAdapter.new, RubyAdapter.new]
+    ADAPTERS = [MarkdownAdapter.new, RBXAdapter.new, RubyAdapter.new].freeze
 
-    def dirload(path, pwd = Dir.pwd)
+    def dirload(path, pwd = Dir.pwd) # rubocop:disable Metrics/AbcSize
       absolute_path = File.expand_path(path, pwd)
       file_paths = Dir["#{absolute_path}/**/*"].filter { !File.directory?(it) }
 

@@ -6,6 +6,6 @@ require_relative 'adapter'
 
 module LowLoad
   class MarkdownAdapter < Adapter
-    EXTENSIONS = ['md', 'rd', 'markdown', 'raindown']
+    EXTENSIONS = %w[md rd markdown raindown].freeze
   end
 end

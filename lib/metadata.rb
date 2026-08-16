@@ -7,8 +7,8 @@ module LowLoad
     EXTENSIONS = [
       *::LowLoad::MarkdownAdapter::EXTENSIONS,
       *::LowLoad::RBXAdapter::EXTENSIONS,
-      *::LowLoad::RubyAdapter::EXTENSIONS,
-    ]
+      *::LowLoad::RubyAdapter::EXTENSIONS
+    ].freeze
 
     attr_accessor :loaded_paths, :missed_paths, :file_types
 
