@@ -4,7 +4,7 @@ module LowLoad
   class Adapter
     EXTENSIONS = []
 
-    def metadata(file_path:) = nil
+    def mapload(file_path:) = nil
 
     def preload(file_path:) = nil
 

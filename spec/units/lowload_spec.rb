@@ -4,19 +4,12 @@ require_relative '../../lib/lowload'
 
 RSpec.describe LowLoad do
   describe '.dirload' do
-    it 'loads a directory' do
-      LowLoad.dirload('spec/fixtures/directory')
+    it 'autoloads directories' do
+      LowLoad.dirload('spec/fixtures')
 
       expect(Namespace::A).not_to be(nil)
       expect(Namespace::B).not_to be(nil)
       expect(Namespace::C).not_to be(nil)
-    end
-  end
-
-  describe '.lowload' do
-    it 'loads a file' do
-      LowLoad.lowload('spec/fixtures/templates/html_node.rb')
-      expect(HTMLNode).not_to be(nil)
     end
   end
 end

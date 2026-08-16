@@ -9,10 +9,8 @@ module LowLoad
     EXTENSIONS = ['rb']
 
     # Map all definitions and dependencies.
-    def metadata(file_path:)
+    def mapload(file_path:)
       Lowkey.load(file_path)
-
-      { file_path: }
     end
 
     # Then autoload all dependencies for those files.

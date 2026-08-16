@@ -2,8 +2,8 @@
 
 module Namespace
   module C
-    def shared_method
-      'Sharing is caring'
+    def a_method
+      'A String'
     end
   end
 end

@@ -17,16 +17,26 @@ module LowLoad
       absolute_path = File.expand_path(path, pwd)
       file_paths = Dir["#{absolute_path}/**/*"].filter { !File.directory?(it) }
 
-      file_path_adapters = file_paths.each_with_object({}) do |file_path, hash|
-        hash[file_path] = find_adapter(file_path:)
+      loaded_paths = {}
+      missed_paths = []
+      file_types = {}
+
+      file_paths.each do |file_path|
+        if (adapter = find_adapter(file_path:))
+          loaded_paths[file_path] = adapter
+        else
+          missed_paths << adapter
+        end
+
+        file_types[extension(file_path:)] ||= []
+        file_types[extension(file_path:)] << file_path
       end
 
-      metadata = Metadata.new
-      metadata.process(file_path_adapters:)
-      step(:preload, file_path_adapters:)
-      step(:evaluate, file_path_adapters:)
+      step(:mapload, loaded_paths:)
+      step(:preload, loaded_paths:)
+      step(:evaluate, loaded_paths:)
 
-      metadata
+      Metadata.new(loaded_paths:, missed_paths:, file_types:)
     end
 
     def lowload(file_path)
@@ -37,15 +47,20 @@ module LowLoad
       adapter.evaluate(file_path:)
     end
 
-    def step(step, file_path_adapters:)
-      file_path_adapters.each do |file_path, adapter|
+    private
+
+    def step(step, loaded_paths:)
+      loaded_paths.each do |file_path, adapter|
         adapter&.send(step, file_path:)
       end
     end
 
     def find_adapter(file_path:)
-      extension = File.extname(file_path).delete_prefix('.')
-      ADAPTERS.find { |adapter| adapter.class::EXTENSIONS.include?(extension) }
+      ADAPTERS.find { |adapter| adapter.class::EXTENSIONS.include?(extension(file_path:)) }
+    end
+
+    def extension(file_path:)
+      File.extname(file_path).delete_prefix('.')
     end
   end
 end

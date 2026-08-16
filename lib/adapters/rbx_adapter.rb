@@ -13,10 +13,8 @@ module LowLoad
     EXTENSIONS = ['rbx']
 
     # Map all definitions and dependencies.
-    def metadata(file_path:)
+    def mapload(file_path:)
       Lowkey.load(file_path)
-
-      { file_path: }
     end
 
     # Then autoload all dependencies for those files.
@@ -35,7 +33,7 @@ module LowLoad
       eval(file_proxy.export, top_level_binding, file_proxy.file_path, 0) # rubocop:disable Security/Eval
 
       # 3. "Runtime" phase (before low nodes are rendered).
-      # Templates only exist if antlers gem has been required by another gem (such as LowNode) and the template contains antlers syntax.
+      # Templates only exist if antlers gem has been required by another gem (like LowNode) and the template contains antlers syntax.
       templates.each do |namespace, method_template|
         klass = Object.const_get(namespace)
         method, template = method_template
