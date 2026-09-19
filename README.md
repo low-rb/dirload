@@ -46,7 +46,7 @@ class MyClass
 end
 ```
 
-ℹ️ For more information see [LowNode](https://github.com/low-rb/low_node).
+ℹ️ For more information see [LowNode](https://github.com/low-rb/lownode).
 
 ### Antlers
 
