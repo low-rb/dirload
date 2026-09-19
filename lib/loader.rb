@@ -11,7 +11,7 @@ module LowLoad
         file_proxy.dependencies.each do |namespace_with_dependency|
           *namespace, dependency = namespace_with_dependency.split('::')
 
-          definition_proxies = find_definition_proxies(namespace:, dependency:)
+          dependency_proxies = find_dependency_proxies(namespace:, dependency:)
 
           current_namespace = Object
           namespace.each do |module_name|
@@ -19,23 +19,27 @@ module LowLoad
             current_namespace = current_namespace.const_get(module_name)
           end
 
-          definition_proxies.each do |definition_proxy|
-            autoloads << { origin: file_proxy.file_path, current_namespace:, dependency:, file_path: definition_proxy.file_path }
-            current_namespace.autoload(dependency.to_sym, definition_proxy.file_path)
+          dependency_proxies.each do |dependency_proxy|
+            autoloads << { origin: file_proxy.file_path, current_namespace:, dependency:, file_path: dependency_proxy.file_path }
+            current_namespace.autoload(dependency.to_sym, dependency_proxy.file_path)
           end
         end
 
         autoloads
       end
 
-      def find_definition_proxies(namespace:, dependency:)
+      def find_dependency_proxies(namespace:, dependency:)
         return Lowkey[dependency] || raise(MissingDependencyError) if namespace.empty?
 
         namespace_with_dependency = [namespace, dependency].join('::')
         return Lowkey[namespace_with_dependency] if Lowkey[namespace_with_dependency]
 
         namespace.pop
-        find_definition_proxies(namespace:, dependency:)
+        find_dependency_proxies(namespace:, dependency:)
+      rescue MissingDependencyError => e
+        raise(MissingDependencyError, "Couldn't autoload #{dependency}. Require it manually?") unless const_get(dependency)
+
+        []
       end
     end
   end
