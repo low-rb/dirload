@@ -15,7 +15,12 @@ module LowLoad
 
     def dirload(path, pwd = Dir.pwd) # rubocop:disable Metrics/AbcSize
       absolute_path = File.expand_path(path, pwd)
-      file_paths = Dir["#{absolute_path}/**/*"].filter { !File.directory?(it) }
+
+      if File.directory?(absolute_path)
+        file_paths = Dir["#{absolute_path}/**/*"].filter { !File.directory?(it) }
+      else
+        file_paths = [*absolute_path]
+      end
 
       loaded_paths = {}
       missed_paths = []
