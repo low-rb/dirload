@@ -2,7 +2,7 @@
 
 # rubocop:disable Lint/UnusedMethodArgument
 
-module LowLoad
+module Dirload
   class Adapter
     EXTENSIONS = [].freeze
 

@@ -2,12 +2,12 @@
 
 require_relative 'adapters/markdown_adapter'
 
-module LowLoad
+module Dirload
   class Metadata
     EXTENSIONS = [
-      *::LowLoad::MarkdownAdapter::EXTENSIONS,
-      *::LowLoad::RBXAdapter::EXTENSIONS,
-      *::LowLoad::RubyAdapter::EXTENSIONS
+      *::Dirload::MarkdownAdapter::EXTENSIONS,
+      *::Dirload::RBXAdapter::EXTENSIONS,
+      *::Dirload::RubyAdapter::EXTENSIONS
     ].freeze
 
     attr_accessor :loaded_paths, :missed_paths, :file_types

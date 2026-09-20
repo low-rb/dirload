@@ -1,10 +1,10 @@
-<a href="https://rubygems.org/gems/lowload" title="Install gem"><img src="https://badge.fury.io/rb/lowload.svg" alt="Gem version" height="18"></a> <a href="https://github.com/low-rb/lowload" title="GitHub"><img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub repo" height="18"></a> <a href="https://codeberg.org/Iow/load" title="Codeberg"><img src="https://img.shields.io/badge/Codeberg-2185D0?style=for-the-badge&logo=Codeberg&logoColor=white" alt="Codeberg repo" height="18"></a>
+<a href="https://rubygems.org/gems/dirload" title="Install gem"><img src="https://badge.fury.io/rb/dirload.svg" alt="Gem version" height="18"></a> <a href="https://github.com/low-rb/dirload" title="GitHub"><img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub repo" height="18"></a> <a href="https://codeberg.org/Iow/load" title="Codeberg"><img src="https://img.shields.io/badge/Codeberg-2185D0?style=for-the-badge&logo=Codeberg&logoColor=white" alt="Codeberg repo" height="18"></a>
 
-# LowLoad
+# Dirload
 
-LowLoad is really dumb; like a bull in a china shop, smashing through fragile dependencies to autoload your code without manual `load`/`require`/`require_relative` calls.
+Dirload is really dumb; like a bull in a china shop, smashing through fragile dependencies to autoload your code without manual `load`/`require`/`require_relative` calls.
 
-1. First LowLoad goes through all your files and notes their constant definitions
+1. First Dirload goes through all your files and notes their constant definitions
 2. Then it goes through the same files again and creates autoloads for those dependencies
 3. Then it goes through every file again and loads it into Ruby
 
@@ -21,23 +21,23 @@ This approach results in a very flexible autoloader with no conventions to follo
 
 Load an entire directory with:
 ```ruby
-LowLoad.dirload(File.expand_path('app', __FILE__))
+dirload(File.expand_path('app', __FILE__))
 ```
 
-### `lowload()`
+### `dirload()`
 
 Load an `.rb` or `.rbx` file with:
 ```ruby
-LowLoad.lowload('spec/fixtures/html_node.rbx')
+dirload('spec/fixtures/html_node.rbx')
 ```
 
 ## File Support
 
-LowLoad supports normal Ruby (`.rb`) files as well as a few other embedded formats.
+Dirload supports normal Ruby (`.rb`) files as well as a few other embedded formats.
 
 ### RBX
 
-LowLoad supports loading RBX files (`.rbx`). RBX files are Ruby files containing unescaped HTML markup:
+Dirload supports loading RBX files (`.rbx`). RBX files are Ruby files containing unescaped HTML markup:
 ```ruby
 class MyClass
   def render
@@ -68,7 +68,7 @@ end
 
 ## Caveats
 
-Like other autoloading libraries, LowLoad doesn't support circular dependencies on class load (runtime is fine).
+Like other autoloading libraries, Dirload doesn't support circular dependencies on class load (runtime is fine).
 
 ❌ Please don't do:
 ```ruby
@@ -98,7 +98,7 @@ end
 
 ## Installation
 
-Add `gem 'lowload'` to your Gemfile then:
+Add `gem 'dirload'` to your Gemfile then:
 ```
 bundle install
 ```

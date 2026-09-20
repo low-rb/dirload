@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module LowLoad
+module Dirload
   class Loader
     class MissingDependencyError < StandardError; end
 

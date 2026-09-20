@@ -3,18 +3,18 @@
 require_relative 'lib/version'
 
 Gem::Specification.new do |spec|
-  spec.name = 'lowload'
-  spec.version = LowLoad::VERSION
+  spec.name = 'dirload'
+  spec.version = Dirload::VERSION
   spec.authors = ['maedi']
   spec.email = ['maediprichard@gmail.com']
 
   spec.summary = 'An autoloader without namespace and folder structure conventions'
   spec.description = 'An autoloader that lets you use any module namespace with any folder structure and mix in manual requires.'
-  spec.homepage = 'https://github.com/low-rb/lowload'
+  spec.homepage = 'https://github.com/low-rb/dirload'
   spec.required_ruby_version = '>= 3.3.0'
 
   spec.metadata['homepage_uri'] = spec.homepage
-  spec.metadata['source_code_uri'] = 'https://github.com/low-rb/lowload/src/branch/main'
+  spec.metadata['source_code_uri'] = 'https://github.com/low-rb/dirload/src/branch/main'
 
   # Specify which files should be added to the gem when it is released.
   spec.files = Dir.chdir(File.expand_path(__dir__)) do

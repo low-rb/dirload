@@ -8,7 +8,7 @@ def top_level_binding
   binding
 end
 
-module LowLoad
+module Dirload
   class RBXAdapter < Adapter
     EXTENSIONS = ['rbx'].freeze
 

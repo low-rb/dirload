@@ -4,15 +4,15 @@
 
 Install the gem and add to the application's Gemfile by executing:
 
-    $ bundle add lowload
+```bash
+bundle add dirload
+```
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
-    $ gem install lowload
-
-## Usage
-
-TODO: Write usage instructions here
+```bash
+gem install dirload
+```
 
 ## Development
 
@@ -22,4 +22,4 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/low-rb/lowload.
+Bug reports and pull requests are welcome on GitHub at https://github.com/low-rb/dirload.

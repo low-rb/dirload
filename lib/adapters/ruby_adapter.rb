@@ -4,7 +4,7 @@ require 'lowkey'
 require_relative 'adapter'
 require_relative '../loader'
 
-module LowLoad
+module Dirload
   class RubyAdapter < Adapter
     EXTENSIONS = ['rb'].freeze
 

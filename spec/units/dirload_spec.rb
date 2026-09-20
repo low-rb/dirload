@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative '../../lib/lowload'
+require_relative '../../lib/dirload'
 
-RSpec.describe LowLoad do
+RSpec.describe Dirload do
   describe '.dirload' do
     it 'autoloads directories' do
-      LowLoad.dirload('spec/fixtures')
+      dirload('spec/fixtures')
 
       expect(Namespace::A).not_to be(nil)
       expect(Namespace::B).not_to be(nil)
