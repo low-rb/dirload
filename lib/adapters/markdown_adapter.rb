@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'yaml'
-require 'lowkey'
 require_relative 'adapter'
 
 module Dirload
