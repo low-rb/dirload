@@ -8,17 +8,14 @@ module Dirload
   class RubyAdapter < Adapter
     EXTENSIONS = ['rb'].freeze
 
-    # Map all definitions and dependencies.
     def mapload(file_path:)
       Lowkey.load(file_path)
     end
 
-    # Then autoload all dependencies for those files.
     def preload(file_path:)
       Loader.add_autoloads(file_proxy: Lowkey[file_path])
     end
 
-    # Now we can load the file into Ruby.
     def evaluate(file_path:)
       load(file_path)
     end
