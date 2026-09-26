@@ -3,7 +3,7 @@ PATH
   specs:
     antlers (1.0.0)
       erb
-      low_event
+      lowevent
       lowkey
       plugs
 
@@ -74,14 +74,6 @@ GEM
     language_server-protocol (3.17.0.6)
     lint_roller (1.1.0)
     logger (1.7.0)
-    low_event (0.8.0)
-      low_type (~> 1.0)
-      observers
-      protocol-http
-      providers
-    low_type (1.3.2)
-      expressions (~> 0.1)
-      lowkey (~> 0.4)
     lowevent (0.8.0)
       lowtype (~> 1.4)
       observers
@@ -207,8 +199,6 @@ CHECKSUMS
   language_server-protocol (3.17.0.6) sha256=5ef2c0c138f8267e1bc631d3328347d354f96724b0af22f2c79516120443b7f0
   lint_roller (1.1.0) sha256=2c0c845b632a7d172cb849cc90c1bce937a28c5c8ccccb50dfd46a485003cc87
   logger (1.7.0) sha256=196edec7cc44b66cfb40f9755ce11b392f21f7967696af15d274dde7edff0203
-  low_event (0.8.0) sha256=2395425623ea9821da8548a1579c99a80d54e7e0ed27f980ebfc5be9b101c94b
-  low_type (1.3.2) sha256=69b26b1342196e7bd3f78fcac84c05ebf3636dab72b10f090aa241caf841c09c
   lowevent (0.8.0)
   lowkey (0.4.3)
   lowloop (0.8.0)
