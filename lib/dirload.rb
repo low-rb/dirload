@@ -7,45 +7,47 @@ require_relative 'loader'
 require_relative 'metadata'
 
 module Dirload
+  module_function
+
   class UnsupportedFileType < StandardError; end
   class UnsupportedTemplate < StandardError; end
 
   ADAPTERS = [MarkdownAdapter.new, RBXAdapter.new, RubyAdapter.new].freeze
 
-  def dirload(path, pwd = Dir.pwd, error: false) # rubocop:disable Metrics/AbcSize
-    absolute_path = File.expand_path(path, pwd)
+  module KernelMethods
+    def dirload(path, pwd = Dir.pwd, error: false) # rubocop:disable Metrics/AbcSize
+      absolute_path = File.expand_path(path, pwd)
 
-    return adapter_load(file_path: absolute_path) unless File.directory?(absolute_path)
+      return Dirload.file_load(file_path: absolute_path) unless File.directory?(absolute_path)
 
-    loaded_paths = {}
-    missed_paths = []
-    file_types = {}
+      loaded_paths = {}
+      missed_paths = []
+      file_types = {}
 
-    file_paths(absolute_path:).each do |file_path|
-      if (adapter = find_adapter(file_path:))
-        loaded_paths[file_path] = adapter
-      else
-        missed_paths << adapter
+      Dirload.file_paths(absolute_path:).each do |file_path|
+        if (adapter = Dirload.find_adapter(file_path:))
+          loaded_paths[file_path] = adapter
+        else
+          missed_paths << adapter
+        end
+
+        file_types[Dirload.extension(file_path:)] ||= []
+        file_types[Dirload.extension(file_path:)] << file_path
       end
 
-      file_types[extension(file_path:)] ||= []
-      file_types[extension(file_path:)] << file_path
+      Dirload.step(:mapload, loaded_paths:)
+      Dirload.step(:preload, loaded_paths:)
+      Dirload.step(:evaluate, loaded_paths:)
+
+      Metadata.new(loaded_paths:, missed_paths:, file_types:)
     end
-
-    step(:mapload, loaded_paths:)
-    step(:preload, loaded_paths:)
-    step(:evaluate, loaded_paths:)
-
-    Metadata.new(loaded_paths:, missed_paths:, file_types:)
   end
-
-  private
 
   def file_paths(absolute_path:)
     Dir["#{absolute_path}/**/*"].filter { !File.directory?(it) }
   end
 
-  def adapter_load(file_path:)
+  def file_load(file_path:)
     adapter = find_adapter(file_path:)
 
     raise(UnsupportedFileType, "Could not load #{file_path}") if adapter.nil?
@@ -68,4 +70,4 @@ module Dirload
   end
 end
 
-Kernel.send(:include, Dirload)
+Kernel.send(:include, Dirload::KernelMethods)
