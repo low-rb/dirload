@@ -22,7 +22,8 @@ module Dirload
 
     def evaluate(file_path:)
       # 1. "File Load" phase.
-      file_proxy = Lowkey[file_path] || Lowkey.load(file_path)
+      # Load fresh because wrapping render methods mutates the file proxy, which would break re-evaluating a cached one.
+      file_proxy = Lowkey.load(file_path)
       templates = wrap_render_methods(file_proxy:)
 
       # 2. "Class Load" phase.
