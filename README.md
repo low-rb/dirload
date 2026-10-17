@@ -57,6 +57,13 @@ end
 
 ℹ️ See [Antlers](https://github.com/raindeer-rb/antlers).
 
+Antlers is the template engine when it's been required. To use another engine, or to make the choice explicit in a boot file:
+```ruby
+Dirload.configure do |config|
+  config.template_engine = Antlers # Any object with an "ast(template:, namespace:)" method.
+end
+```
+
 ## How it works
 
 1. First Dirload goes through all your files and notes their constant definitions

@@ -30,7 +30,7 @@ module Dirload
       eval(file_proxy.export, top_level_binding, file_proxy.file_path, 0) # rubocop:disable Security/Eval
 
       # 3. "Runtime" phase (before low nodes are rendered).
-      # Templates only exist if antlers gem has been required by another gem (like LowNode) and the template contains antlers syntax.
+      # Templates only exist when there's a template engine and the template contains template syntax.
       templates.each do |namespace, method_template|
         klass = Object.const_get(namespace)
         method, template = method_template
@@ -39,8 +39,7 @@ module Dirload
 
         next unless supports_templates?(klass) || raise(UnsupportedTemplate, "Template for '#{namespace}' identified but not implemented")
 
-        # TODO: Make template engine configurable.
-        klass.build_template(template:, params:, engine: Antlers, namespace:)
+        klass.build_template(template:, params:, engine: Dirload.template_engine, namespace:)
       end
     end
 
@@ -61,7 +60,7 @@ module Dirload
 
         render_method_body = render_method.body.export
 
-        if defined?(Antlers) && ['{', '<{'].any? { |needle| render_method_body.include?(needle) }
+        if Dirload.template_engine && ['{', '<{'].any? { |needle| render_method_body.include?(needle) }
           templates[class_proxy.namespace] = [render_method, render_method_body]
         end
 

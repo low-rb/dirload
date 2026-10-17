@@ -24,6 +24,23 @@ RSpec.describe 'Templates' do
       end
     end
 
+    context 'with a configured template engine' do
+      let(:engine) do
+        Module.new do
+          def self.ast(template:, namespace:) = [:custom_ast, template.strip, namespace]
+        end
+      end
+
+      before { Dirload.configure { |config| config.template_engine = engine } }
+      after { Dirload.configure { |config| config.template_engine = nil } }
+
+      it 'creates template with the configured engine' do
+        dirload('spec/fixtures/templates/custom_engine_node.rbx')
+
+        expect(CustomEngineNode.template).to have_attributes(engine:, ast: [:custom_ast, %(<p>{"I'm a child"}</p>), 'CustomEngineNode'])
+      end
+    end
+
     context 'with HEREDOC' do
       it 'does not wrap RBX in a string' do
         dirload('spec/fixtures/templates/rbx_node.rbx')

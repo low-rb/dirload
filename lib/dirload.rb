@@ -14,6 +14,21 @@ module Dirload
 
   ADAPTERS = [MarkdownAdapter.new, RBXAdapter.new, RubyAdapter.new].freeze
 
+  Config = Struct.new(:template_engine)
+
+  def config
+    @config ||= Config.new(nil)
+  end
+
+  def configure
+    yield(config)
+  end
+
+  # The engine that RBX templates are built with. Defaults to Antlers when another gem (such as LowNode) requires it.
+  def template_engine
+    config.template_engine || (Antlers if defined?(Antlers))
+  end
+
   module KernelMethods
     def dirload(path, pwd = Dir.pwd, error: false) # rubocop:disable Metrics/AbcSize
       absolute_path = File.expand_path(path, pwd)
