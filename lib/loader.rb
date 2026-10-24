@@ -36,9 +36,9 @@ module Dirload
 
         namespace.pop
         find_dependency_proxies(namespace:, dependency:)
-      rescue MissingDependencyError => e
-        raise(MissingDependencyError, "Couldn't autoload #{dependency}. Require it manually?") unless const_get(dependency)
-
+      # A dependency that isn't mapped could come from a gem or from another constant already loaded.
+      # TODO: Map more dependencies and try to remove this workaround.
+      rescue MissingDependencyError
         []
       end
     end
